@@ -13,7 +13,7 @@ import {
 
 import { Payment } from "@/lib/types";
 
-export default function MonthsTable(props: { payments: Payment[] }) {
+export default function PaymentTable(props: { payments: Payment[] }) {
   const { payments } = props;
   return (
     <>

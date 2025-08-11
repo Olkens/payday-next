@@ -2,24 +2,11 @@
 
 import { Payment } from "@/lib/types";
 import AddPaymentForm from "@/components/ui/AddPaymentForm";
-import MonthsTable from "@/components/ui/MonthsTable";
+import PaymentsTable from "@/components/ui/PaymentTable";
 import { useState } from "react";
 
-export default function PaymentTable() {
-  const [payments, setPayments] = useState<Payment[]>([
-    {
-      title: "rower",
-      cost: 399,
-      paymentsLeft: 4,
-      numberOfPayments: 5,
-    },
-    {
-      title: "monitor",
-      cost: 372,
-      paymentsLeft: 6,
-      numberOfPayments: 10,
-    },
-  ]);
+export default function PaymentData(props: { paymentsData: Payment[] }) {
+  const [payments, setPayments] = useState<Payment[]>(props.paymentsData);
 
   const initialPayment: Payment = {
     title: "",
@@ -34,7 +21,7 @@ export default function PaymentTable() {
 
   return (
     <div>
-      <MonthsTable payments={payments}></MonthsTable>
+      <PaymentsTable payments={payments}></PaymentsTable>
       <AddPaymentForm
         payment={initialPayment}
         onSubmitFunction={handleSubmit}
