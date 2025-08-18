@@ -5,23 +5,27 @@ import AddPaymentForm from "@/components/ui/AddPaymentForm";
 import PaymentsTable from "@/components/ui/PaymentTable";
 import { useState } from "react";
 
-export default function PaymentData(props: { paymentsData: Payment[] }) {
+export default function PaymentData(props: {
+  paymentsData: Payment[];
+  monthId: number;
+}) {
   const [payments, setPayments] = useState<Payment[]>(props.paymentsData);
-
+  const monthId = props.monthId;
   const initialPayment: Payment = {
     title: "",
     cost: 0,
     paymentsLeft: 0,
     numberOfPayments: 0,
   };
+
   const handleSubmit = async (payment: Payment) => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": `application/json/` },
       body: JSON.stringify(payment),
     };
     const response = await fetch(
-      "http://localhost:8080/api/v1/payments",
+      `http://localhost:8080/api/v1/payments/${monthId}`,
       requestOptions,
     );
     const savedPayment = await response.json();

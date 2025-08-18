@@ -14,7 +14,7 @@ export default async function MonthPage({
   return (
     <div className="w-3/5 flex flex-col items-center justify-center">
       <h2>{months[monthId]}</h2>
-      <PaymentTab paymentsData={payments}></PaymentTab>
+      <PaymentTab paymentsData={payments} monthId={monthId}></PaymentTab>
     </div>
   );
 }
