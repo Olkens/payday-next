@@ -5,10 +5,14 @@ import AddPaymentForm from "@/components/ui/AddPaymentForm";
 import PaymentsTable from "@/components/ui/PaymentTable";
 import { useState } from "react";
 
-export default function PaymentData(props: {
+interface PaymentTabProps {
   paymentsData: Payment[];
   monthId: number;
-}) {
+  monthName: string;
+  year: string;
+}
+
+export default function PaymentData(props: PaymentTabProps) {
   const [payments, setPayments] = useState<Payment[]>(props.paymentsData);
   const monthId = props.monthId;
   const initialPayment: Payment = {
@@ -16,6 +20,10 @@ export default function PaymentData(props: {
     cost: 0,
     paymentsLeft: 0,
     numberOfPayments: 0,
+    month: {
+      name: props.monthName,
+      year: props.year,
+    },
   };
 
   const handleSubmit = async (payment: Payment) => {
