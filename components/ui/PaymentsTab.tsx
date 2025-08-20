@@ -29,11 +29,11 @@ export default function PaymentData(props: PaymentTabProps) {
   const handleSubmit = async (payment: Payment) => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": `application/json/` },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payment),
     };
     const response = await fetch(
-      `http://localhost:8080/api/v1/payments/${monthId}`,
+      `http://localhost:8080/api/v1/payments`,
       requestOptions,
     );
     const savedPayment = await response.json();
