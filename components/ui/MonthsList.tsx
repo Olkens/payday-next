@@ -4,6 +4,7 @@ import YearPicker from "@/components/ui/YearPicker";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Month } from "@/lib/types";
+import CreateNewYearButton from "./CreateNewYearButton";
 
 export default function MonthsList() {
   const [yearCounter, setYearCounter] = useState(2025);
@@ -29,7 +30,7 @@ export default function MonthsList() {
     };
 
     fetchMonths();
-  }, [yearCounter]);
+  }, [yearCounter, months.length]);
 
   const increaseYearCounter = () => setYearCounter((prev) => prev + 1);
   const decreaseYearCounter = () => setYearCounter((prev) => prev - 1);
@@ -43,25 +44,30 @@ export default function MonthsList() {
       />
 
       {loading && <p className="text-center">Ładowanie...</p>}
-
+      <div className="flex flex-row justify-center">
+        {months.length < 1 && (
+          <CreateNewYearButton setMonths={setMonths}></CreateNewYearButton>
+        )}
+      </div>
       <ul className="flex flex-wrap gap-2 justify-center">
-        {months.map((month, i) => (
-          <div
-            key={i}
-            className="border-s-gray-50 flex-col items-center border-spacing-1 outline rounded-md w-1/4 flex justify-center min-h-32 cursor-pointer"
-          >
-            <Link href={`/month/${yearCounter}/${i}`}>
-              <li>
-                {month.name}
-                <div className="pt-2">
-                  <p>Przychody: xxxxxx zł</p>
-                  <p>Wydatki: xxxxxxxx zł</p>
-                  <p>Netto: xxxxxxx zł</p>
-                </div>
-              </li>
-            </Link>
-          </div>
-        ))}
+        {months.length > 0 &&
+          months.map((month, i) => (
+            <div
+              key={i}
+              className="border-s-gray-50 flex-col items-center border-spacing-1 outline rounded-md w-1/4 flex justify-center min-h-32 cursor-pointer"
+            >
+              <Link href={`/month/${yearCounter}/${i}`}>
+                <li>
+                  {month.name}
+                  <div className="pt-2">
+                    <p>Przychody: xxxxxx zł</p>
+                    <p>Wydatki: xxxxxxxx zł</p>
+                    <p>Netto: xxxxxxx zł</p>
+                  </div>
+                </li>
+              </Link>
+            </div>
+          ))}
       </ul>
     </div>
   );
