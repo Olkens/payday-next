@@ -32,6 +32,17 @@ export default function MonthsList() {
     fetchMonths();
   }, [yearCounter, months.length]);
 
+  const handleCreateNewYear = async (year: string) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    const response = await fetch(
+      `http://localhost:8080/api/v1/months/${year}`,
+      requestOptions,
+    );
+  };
+
   const increaseYearCounter = () => setYearCounter((prev) => prev + 1);
   const decreaseYearCounter = () => setYearCounter((prev) => prev - 1);
 
@@ -46,7 +57,11 @@ export default function MonthsList() {
       {loading && <p className="text-center">Ładowanie...</p>}
       <div className="flex flex-row justify-center">
         {months.length < 1 && (
-          <CreateNewYearButton setMonths={setMonths}></CreateNewYearButton>
+          <CreateNewYearButton
+            setMonths={setMonths}
+            year={yearCounter}
+            handleCreateNewYear={handleCreateNewYear}
+          ></CreateNewYearButton>
         )}
       </div>
       <ul className="flex flex-wrap gap-2 justify-center">
