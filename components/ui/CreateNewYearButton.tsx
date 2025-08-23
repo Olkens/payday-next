@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 interface cnybProps {
   setMonths: React.Dispatch<React.SetStateAction<Month[]>>;
   year: number;
-  handleCreateNewYear: (year: number) => Promise<void>;
+  handleCreateNewYear: (year: string) => Promise<void>;
 }
 
 export default function CreateNewYearButton(props: cnybProps) {
