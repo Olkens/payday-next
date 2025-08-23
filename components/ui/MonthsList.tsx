@@ -37,10 +37,16 @@ export default function MonthsList() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     };
-    const response = await fetch(
+    const response: Response = await fetch(
       `http://localhost:8080/api/v1/months/${year}`,
       requestOptions,
     );
+    if (!response.ok) {
+      throw new Error("Błąd przy tworzeniu nowego roku");
+    }
+
+    const months: Month[] = await response.json();
+    setMonths(months);
   };
 
   const increaseYearCounter = () => setYearCounter((prev) => prev + 1);
