@@ -4,11 +4,11 @@ export interface Payment {
   paymentsLeft: number;
   numberOfPayments: number;
   month?: Month;
-  income?: number;
 }
 
 export interface Month {
   name: string;
   year: string;
   idx?: number;
+  income?: number;
 }

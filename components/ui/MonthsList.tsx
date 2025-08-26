@@ -5,11 +5,14 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Month } from "@/lib/types";
 import CreateNewYearButton from "./CreateNewYearButton";
+import { Edit, Plus } from "lucide-react";
+import EditMonthModal from "./EditMonthModal";
 
 export default function MonthsList() {
   const [yearCounter, setYearCounter] = useState(2025);
   const [months, setMonths] = useState<Month[]>([]);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchMonths = async () => {
@@ -32,7 +35,7 @@ export default function MonthsList() {
     fetchMonths();
   }, [yearCounter, months.length]);
 
-  const handleCreateNewYear = async (year: string) => {
+  const handleCreateNewYear = async (year: string | number) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -53,7 +56,7 @@ export default function MonthsList() {
   const decreaseYearCounter = () => setYearCounter((prev) => prev - 1);
 
   return (
-    <div className="w-3/5">
+    <div className="w-3/5 relative">
       <YearPicker
         yearCounter={yearCounter}
         increaseCounter={increaseYearCounter}
@@ -75,18 +78,27 @@ export default function MonthsList() {
           months.map((month, i) => (
             <div
               key={i}
-              className="border-s-gray-50 flex-col items-center border-spacing-1 outline rounded-md w-1/4 flex justify-center min-h-32 cursor-pointer"
+              className="border-s-gray-50 flex-col relative items-center border-spacing-1 outline rounded-md w-1/4 flex justify-center min-h-32 cursor-pointer"
             >
+              <button
+                onClick={() => setShowModal(true)}
+                className="absolute top-2 right-2 p-2 rounded-full hover:bg-gray-200"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
               <Link href={`/month/${yearCounter}/${i}`}>
                 <li>
                   {month.name}
                   <div className="pt-2">
-                    <p>Przychody: xxxxxx zł</p>
+                    <p>Przychody: {month.income} zł</p>
                     <p>Wydatki: xxxxxxxx zł</p>
                     <p>Netto: xxxxxxx zł</p>
                   </div>
                 </li>
               </Link>
+              {showModal && (
+                <EditMonthModal setShowModal={setShowModal} month={month} />
+              )}
             </div>
           ))}
       </ul>

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 interface cnybProps {
   setMonths: React.Dispatch<React.SetStateAction<Month[]>>;
-  year: number;
+  year: string | number;
   handleCreateNewYear: (year: string) => Promise<void>;
 }
 
